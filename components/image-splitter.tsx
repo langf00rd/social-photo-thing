@@ -122,32 +122,22 @@ export function ImageSplitter() {
   };
 
   return (
-    <div className="p-10">
+    <div className="pt-10">
       <div className="fixed right-10 bottom-10 z-10 flex gap-2">
-        {!originalImage ? (
-          <Button onClick={() => fileInputRef.current?.click()}>
-            Choose Image
-          </Button>
-        ) : (
-          <Button
-            variant="outline"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            Change Image
-          </Button>
+        {originalImage && (
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              Change Image
+            </Button>
+            <Button onClick={handleExportBoth}>
+              <Download />
+              Export
+            </Button>
+          </div>
         )}
-        <Button onClick={handleExportBoth}>
-          <Download />
-          Export
-        </Button>
-        <Button onClick={() => handleExport("left")} variant="outline">
-          <Download />
-          Export Left
-        </Button>
-        <Button onClick={() => handleExport("right")} variant="outline">
-          <Download />
-          Export Right
-        </Button>
       </div>
 
       <input
@@ -161,7 +151,7 @@ export function ImageSplitter() {
         }}
       />
 
-      {originalImage && (
+      {originalImage ? (
         <div className="grid md:grid-cols-2 gap-4">
           <canvas
             ref={leftCanvasRef}
@@ -175,6 +165,12 @@ export function ImageSplitter() {
             height={CANVAS_SIZE}
             className="w-full h-auto border bg-white"
           />
+        </div>
+      ) : (
+        <div className="flex items-center border justify-center h-[90vh]">
+          <Button onClick={() => fileInputRef.current?.click()}>
+            Choose Image
+          </Button>
         </div>
       )}
     </div>

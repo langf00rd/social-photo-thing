@@ -1,24 +1,23 @@
-import { Clock, Grid, Scissors } from "lucide-react";
+import { Grid, Scissors } from "lucide-react";
 
 export const PAGES = [
   {
-    label: "Collage",
-    description: "Create a collage",
-    route: "/collage",
+    label: "Home",
+    description: "Home",
+    route: "/",
     icon: Grid,
   },
   {
     label: "Splitter",
     route: "/splitter",
     icon: Scissors,
-    description: "Split an image",
+    description: "Split photo",
   },
   {
-    label: "Scheduler",
-    route: "#",
-    icon: Clock,
-    description: "Schedule a post",
-    enabled: false,
+    label: "Collage",
+    description: "Create collage",
+    route: "/collage",
+    icon: Grid,
   },
 ];
 

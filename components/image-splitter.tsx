@@ -167,7 +167,7 @@ export function ImageSplitter() {
           />
         </div>
       ) : (
-        <div className="flex items-center border justify-center h-[90vh]">
+        <div className="flex items-center border-b justify-center h-[90vh]">
           <Button onClick={() => fileInputRef.current?.click()}>
             Choose Image
           </Button>

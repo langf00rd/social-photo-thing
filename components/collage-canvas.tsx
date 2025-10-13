@@ -3,87 +3,26 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CANVAS_SIZE } from "@/lib/contants";
+import { CANVAS_SIZE, PRESETS } from "@/lib/contants";
+import { ImageSlot, LayoutPreset } from "@/lib/types";
 import { Download, Trash2 } from "lucide-react";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-
-type LayoutPreset = {
-  id: string;
-  name: string;
-  slots: number;
-  divisions: { x: number; y: number; width: number; height: number }[];
-};
-
-const PRESETS: LayoutPreset[] = [
-  {
-    id: "single",
-    name: "1 Image",
-    slots: 1,
-    divisions: [{ x: 0, y: 0, width: 1, height: 1 }],
-  },
-  {
-    id: "vertical-2",
-    name: "2 Vertical",
-    slots: 2,
-    divisions: [
-      { x: 0, y: 0, width: 0.5, height: 1 },
-      { x: 0.5, y: 0, width: 0.5, height: 1 },
-    ],
-  },
-  {
-    id: "horizontal-2",
-    name: "2 Horizontal",
-    slots: 2,
-    divisions: [
-      { x: 0, y: 0, width: 1, height: 0.5 },
-      { x: 0, y: 0.5, width: 1, height: 0.5 },
-    ],
-  },
-  {
-    id: "grid-3",
-    name: "3 Grid",
-    slots: 3,
-    divisions: [
-      { x: 0, y: 0, width: 0.5, height: 0.5 },
-      { x: 0.5, y: 0, width: 0.5, height: 0.5 },
-      { x: 0, y: 0.5, width: 1, height: 0.5 },
-    ],
-  },
-  {
-    id: "grid-4",
-    name: "4 Grid",
-    slots: 4,
-    divisions: [
-      { x: 0, y: 0, width: 0.5, height: 0.5 },
-      { x: 0.5, y: 0, width: 0.5, height: 0.5 },
-      { x: 0, y: 0.5, width: 0.5, height: 0.5 },
-      { x: 0.5, y: 0.5, width: 0.5, height: 0.5 },
-    ],
-  },
-];
-
-type ImageSlot = {
-  file: File | null;
-  img: HTMLImageElement | null;
-  scale: number;
-  offsetX: number;
-  offsetY: number;
-};
+import { Slider } from "./ui/slider";
 
 export function CollageCanvas() {
-  const [selectedPreset, setSelectedPreset] = useState<LayoutPreset>(
-    PRESETS[0],
-  );
   const [images, setImages] = useState<ImageSlot[]>([]);
-  const [gapSize, setGapSize] = useState(0);
-  const [padding, setPadding] = useState(0);
+  const [gapSize, setGapSize] = useState(20);
+  const [padding, setPadding] = useState(20);
   const [backgroundColor, setBackgroundColor] = useState("#ffffff");
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [selectedPreset, setSelectedPreset] = useState<LayoutPreset>(
+    PRESETS[0],
+  );
 
   useEffect(() => {
     setImages(
@@ -492,27 +431,25 @@ export function CollageCanvas() {
           </div>
           <div className="space-y-4">
             <Label>Customize Grid</Label>
-            <div>
+            <div className="space-y-1">
               <p className="font-medium text-neutral-500 text-sm">Gap</p>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                step="5"
-                value={gapSize}
-                onChange={(e) => setGapSize(Number.parseInt(e.target.value))}
+              <Slider
+                min={0}
+                max={100}
+                step={10}
+                defaultValue={[gapSize]}
+                onValueChange={setGapSize}
                 className="w-full"
               />
             </div>
-            <div>
+            <div className="space-y-1">
               <p className="font-medium text-neutral-500 text-sm">Padding</p>
-              <input
-                type="range"
-                min="0"
-                max="200"
-                step="10"
-                value={padding}
-                onChange={(e) => setPadding(Number.parseInt(e.target.value))}
+              <Slider
+                min={0}
+                max={100}
+                step={10}
+                defaultValue={[padding]}
+                onValueChange={setPadding}
                 className="w-full"
               />
             </div>

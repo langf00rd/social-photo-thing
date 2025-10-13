@@ -1,13 +1,14 @@
 export default function Home() {
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="max-w-[800px] space-y-20 px-10">
-        <div>
-          <h1 className="text-xl text-center md:text-[3rem] font-medium">
-            A free Instagram photo splitter and collage maker
+      <div className="max-w-[870px] space-y-20 px-10">
+        <div className="space-y-4">
+          <h1 className="text-xl text-center md:leading-[1.25] md:text-[3.4rem] font-medium">
+            Free Social Media Collage Maker &amp; Photo Splitter
           </h1>
-          <p className="md:hidden text-center mt-10 text-destructive">
-            Please open the app on a bigger screen
+          <p className="text-neutral-500 max-w-xl mx-auto text-xl text-center">
+            Create high-quality photo collages or split a single image into
+            multiple 1x1 panels for Instagram carousels
           </p>
         </div>
       </div>

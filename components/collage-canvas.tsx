@@ -13,7 +13,7 @@ import { Slider } from "./ui/slider";
 export function CollageCanvas() {
   const [images, setImages] = useState<ImageSlot[]>([]);
   const [gapSize, setGapSize] = useState(20);
-  const [padding, setPadding] = useState(20);
+  const [padding, setPadding] = useState(10);
   const [backgroundColor, setBackgroundColor] = useState("#ffffff");
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -346,7 +346,7 @@ export function CollageCanvas() {
   };
 
   return (
-    <div>
+    <div className="px-44">
       <Button onClick={handleExport} className="fixed right-10 bottom-10 z-10">
         <Download />
         Export
@@ -366,9 +366,9 @@ export function CollageCanvas() {
             onWheel={handleWheel}
           />
         </div>
-        <div className="flex-1 p-14 border-r space-y-20">
+        <div className="flex-1 p-14 border-r space-y-10">
           <div className="space-y-2">
-            <Label>Choose Layout</Label>
+            <Label>Layout</Label>
             <div className="flex flex-wrap gap-4">
               {PRESETS.map((preset) => (
                 <div
@@ -382,8 +382,8 @@ export function CollageCanvas() {
             </div>
           </div>
           <div className="space-y-2">
-            <Label>Select Photos</Label>
-            <div className="gap-4 grid grid-cols-2">
+            <Label>Photos</Label>
+            <div className="gap-2 grid grid-cols-4">
               {images.map((imageSlot, index) => (
                 <Button
                   key={index}
@@ -399,7 +399,7 @@ export function CollageCanvas() {
                   <div>
                     {imageSlot.img ? (
                       <div
-                        className="flex items-center text-destructive gap-2"
+                        className="flex items-center text-destructive gap-1"
                         onClick={(e) => {
                           e.stopPropagation();
                           clearImage(index);
@@ -430,7 +430,7 @@ export function CollageCanvas() {
             </div>
           </div>
           <div className="space-y-4">
-            <Label>Customize Grid</Label>
+            <Label>Customize</Label>
             <div className="space-y-1">
               <p className="font-medium text-neutral-500 text-sm">Gap</p>
               <Slider
@@ -446,12 +446,21 @@ export function CollageCanvas() {
               <p className="font-medium text-neutral-500 text-sm">Padding</p>
               <Slider
                 min={0}
+                max={50} // <= smaller range so padding never kills the grid
+                step={5}
+                value={[padding]}
+                onValueChange={(value) => setPadding(value[0])}
+                className="w-full"
+              />
+
+              {/*<Slider
+                min={0}
                 max={100}
                 step={10}
                 defaultValue={[padding]}
                 onValueChange={setPadding}
                 className="w-full"
-              />
+              />*/}
             </div>
             <div className="space-y-1">
               <p className="font-medium text-neutral-500 text-sm">

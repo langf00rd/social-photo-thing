@@ -386,7 +386,7 @@ export function CollageCanvas() {
           </div>
           <div className="space-y-2">
             <Label>Photos</Label>
-            <div className="gap-2 grid grid-cols-4">
+            <div className="gap-2 grid grid-cols-3">
               {images.map((imageSlot, index) => (
                 <Button
                   key={index}

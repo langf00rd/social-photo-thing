@@ -92,27 +92,27 @@ export const PRESETS: LayoutPreset[] = [
       { x: 0.618, y: 0, width: 0.382, height: 1 },
     ],
   },
-  {
-    id: "magazine-spread",
-    name: "Magazine Spread",
-    slots: 3,
-    divisions: [
-      { x: 0, y: 0, width: 0.65, height: 0.65 },
-      { x: 0.65, y: 0, width: 0.35, height: 0.5 },
-      { x: 0, y: 0.65, width: 1, height: 0.35 },
-    ],
-  },
-  {
-    id: "polaroid-stack",
-    name: "Polaroid Stack",
-    slots: 4,
-    divisions: [
-      { x: 0.05, y: 0.05, width: 0.45, height: 0.45 },
-      { x: 0.5, y: 0.15, width: 0.45, height: 0.45 },
-      { x: 0.15, y: 0.5, width: 0.45, height: 0.45 },
-      { x: 0.55, y: 0.55, width: 0.4, height: 0.4 },
-    ],
-  },
+  // {
+  //   id: "magazine-spread",
+  //   name: "Magazine Spread",
+  //   slots: 3,
+  //   divisions: [
+  //     { x: 0, y: 0, width: 0.65, height: 0.65 },
+  //     { x: 0.65, y: 0, width: 0.35, height: 0.5 },
+  //     { x: 0, y: 0.65, width: 1, height: 0.35 },
+  //   ],
+  // },
+  // {
+  //   id: "polaroid-stack",
+  //   name: "Polaroid Stack",
+  //   slots: 4,
+  //   divisions: [
+  //     { x: 0.05, y: 0.05, width: 0.45, height: 0.45 },
+  //     { x: 0.5, y: 0.15, width: 0.45, height: 0.45 },
+  //     { x: 0.15, y: 0.5, width: 0.45, height: 0.45 },
+  //     { x: 0.55, y: 0.55, width: 0.4, height: 0.4 },
+  //   ],
+  // },
   {
     id: "film-strip",
     name: "Film Strip",

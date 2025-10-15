@@ -455,15 +455,6 @@ export function CollageCanvas() {
                 onValueChange={(value) => setPadding(value[0])}
                 className="w-full"
               />
-
-              {/*<Slider
-                min={0}
-                max={100}
-                step={10}
-                defaultValue={[padding]}
-                onValueChange={setPadding}
-                className="w-full"
-              />*/}
             </div>
             <div className="space-y-1">
               <p className="font-medium text-neutral-500 text-sm">

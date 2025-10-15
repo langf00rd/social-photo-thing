@@ -1,11 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { CANVAS_SIZE } from "@/lib/contants";
-import { Download } from "lucide-react";
+import { Download, Upload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { ActionFAB } from "./fab";
 
 export function ImageSplitter() {
   const [originalImage, setOriginalImage] = useState<HTMLImageElement | null>(
@@ -44,28 +43,28 @@ export function ImageSplitter() {
     const rightCtx = rightCanvasRef.current.getContext("2d");
     if (!leftCtx || !rightCtx) return;
 
-    // Calculate dimensions to fit the image
+    // calculate dimensions to fit the photo
     const imgAspect = originalImage.width / originalImage.height;
-    const totalWidth = CANVAS_SIZE * 2; // Two slides side by side
+    const totalWidth = CANVAS_SIZE * 2; // two slides side by side
     const targetAspect = totalWidth / CANVAS_SIZE;
 
     let sourceWidth, sourceHeight, sourceX, sourceY;
 
     if (imgAspect > targetAspect) {
-      // Image is wider - fit to height
+      // photo is wider - fit to height
       sourceHeight = originalImage.height;
       sourceWidth = sourceHeight * targetAspect;
       sourceX = (originalImage.width - sourceWidth) / 2;
       sourceY = 0;
     } else {
-      // Image is taller - fit to width
+      // photo is taller - fit to width
       sourceWidth = originalImage.width;
       sourceHeight = sourceWidth / targetAspect;
       sourceX = 0;
       sourceY = (originalImage.height - sourceHeight) / 2;
     }
 
-    // Draw left half
+    // draw left half
     leftCtx.fillStyle = "#ffffff";
     leftCtx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
     leftCtx.drawImage(
@@ -80,7 +79,7 @@ export function ImageSplitter() {
       CANVAS_SIZE,
     );
 
-    // Draw right half
+    // draw right half
     rightCtx.fillStyle = "#ffffff";
     rightCtx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
     rightCtx.drawImage(
@@ -122,23 +121,26 @@ export function ImageSplitter() {
   };
 
   return (
-    <div className="pt-10">
-      <div className="fixed right-10 bottom-10 z-10 flex gap-2">
-        {originalImage && (
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              Change Image
-            </Button>
-            <Button onClick={handleExportBoth}>
-              <Download />
-              Export
-            </Button>
-          </div>
-        )}
-      </div>
+    <>
+      <ActionFAB>
+        <div className="flex gap-2">
+          {originalImage && (
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Upload />
+                Change photo
+              </Button>
+              <Button onClick={handleExportBoth}>
+                <Download />
+                Export
+              </Button>
+            </div>
+          )}
+        </div>
+      </ActionFAB>
 
       <input
         ref={fileInputRef}
@@ -152,7 +154,7 @@ export function ImageSplitter() {
       />
 
       {originalImage ? (
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-2 items-center h-screen">
           <canvas
             ref={leftCanvasRef}
             width={CANVAS_SIZE}
@@ -167,97 +169,12 @@ export function ImageSplitter() {
           />
         </div>
       ) : (
-        <div className="flex items-center border-b justify-center h-[90vh]">
+        <div className="flex items-center justify-center h-screen">
           <Button onClick={() => fileInputRef.current?.click()}>
-            Choose Image
+            Choose photo
           </Button>
         </div>
       )}
-    </div>
-  );
-
-  return (
-    <div className="space-y-6">
-      {/* Upload Section */}
-      <Card className="p-6 text-center">
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) handleImageUpload(file);
-          }}
-          className="hidden"
-        />
-        {!originalImage ? (
-          <Button onClick={() => fileInputRef.current?.click()} size="lg">
-            Choose Image
-          </Button>
-        ) : (
-          <div className="space-y-4">
-            <div className="text-sm text-muted-foreground truncate">
-              {fileName}
-            </div>
-            <Button
-              variant="outline"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              Choose Different Image
-            </Button>
-          </div>
-        )}
-      </Card>
-
-      {/* Preview Section */}
-      {originalImage && (
-        <>
-          <div className="grid md:grid-cols-2 gap-4">
-            <Card className="p-4 space-y-3">
-              <Label className="font-semibold">Slide 1 (Left)</Label>
-              <canvas
-                ref={leftCanvasRef}
-                width={CANVAS_SIZE}
-                height={CANVAS_SIZE}
-                className="w-full h-auto border-2 border-border rounded-lg"
-              />
-              <Button
-                onClick={() => handleExport("left")}
-                variant="outline"
-                className="w-full gap-2"
-              >
-                <Download className="h-4 w-4" />
-                Export Slide 1
-              </Button>
-            </Card>
-
-            <Card className="p-4 space-y-3">
-              <Label className="font-semibold">Slide 2 (Right)</Label>
-              <canvas
-                ref={rightCanvasRef}
-                width={CANVAS_SIZE}
-                height={CANVAS_SIZE}
-                className="w-full h-auto border-2 border-border rounded-lg"
-              />
-              <Button
-                onClick={() => handleExport("right")}
-                variant="outline"
-                className="w-full gap-2"
-              >
-                <Download className="h-4 w-4" />
-                Export Slide 2
-              </Button>
-            </Card>
-          </div>
-
-          <div className="flex justify-center">
-            <Button onClick={handleExportBoth} size="lg" className="gap-2">
-              <Download className="h-5 w-5" />
-              Export Both Slides
-            </Button>
-          </div>
-        </>
-      )}
-    </div>
+    </>
   );
 }

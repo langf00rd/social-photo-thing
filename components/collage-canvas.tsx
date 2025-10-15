@@ -8,6 +8,7 @@ import { ImageSlot, LayoutPreset } from "@/lib/types";
 import { Download, Trash2 } from "lucide-react";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
+import { ActionFAB } from "./fab";
 import { Slider } from "./ui/slider";
 
 export function CollageCanvas() {
@@ -256,14 +257,14 @@ export function CollageCanvas() {
         y >= slotY &&
         y <= slotY + slotHeight
       ) {
-        // Clicked inside this slot
+        // clicked inside this slot
         setSelectedSlot(i);
         clickedInside = true;
         break;
       }
     }
 
-    // If click was outside all slots — remove highlight
+    // if click was outside all slots — remove highlight
     if (!clickedInside) {
       setSelectedSlot(null);
     }
@@ -347,10 +348,12 @@ export function CollageCanvas() {
 
   return (
     <div className="px-44">
-      <Button onClick={handleExport} className="fixed right-10 bottom-10 z-10">
-        <Download />
-        Export
-      </Button>
+      <ActionFAB>
+        <Button onClick={handleExport}>
+          <Download />
+          Export
+        </Button>
+      </ActionFAB>
       <div className="flex h-screen flex-row-reverse w-full gap-4">
         <div className="flex-1 p-14 flex items-start  space-y-4">
           <canvas
@@ -438,7 +441,7 @@ export function CollageCanvas() {
                 max={100}
                 step={10}
                 defaultValue={[gapSize]}
-                onValueChange={setGapSize}
+                onValueChange={(a) => setGapSize(Number(a))}
                 className="w-full"
               />
             </div>

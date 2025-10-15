@@ -12,3 +12,9 @@ export type ImageSlot = {
   offsetX: number;
   offsetY: number;
 };
+
+export interface ColorSwatch {
+  hex: string;
+  rgb: { r: number; g: number; b: number };
+  percentage: number;
+}

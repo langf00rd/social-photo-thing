@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "collage x photo splitter",
+  title: "collage x color extractor x photo splitter",
 };
 
 export default function RootLayout({

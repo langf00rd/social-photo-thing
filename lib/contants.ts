@@ -27,6 +27,12 @@ export const PAGES = [
     route: "/collage",
     icon: Grid,
   },
+  {
+    label: "Caption",
+    description: "Create collage",
+    route: "/caption",
+    icon: Grid,
+  },
 ];
 
 /**

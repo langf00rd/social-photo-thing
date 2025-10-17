@@ -193,7 +193,7 @@ export function CollageCanvas() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `instagram-collage-${Date.now()}-highres.png`;
+        a.download = `COLLAGE-${Date.now()}.png`;
         a.click();
         URL.revokeObjectURL(url);
       },
@@ -347,7 +347,7 @@ export function CollageCanvas() {
   };
 
   return (
-    <div className="px-44">
+    <>
       <ActionFAB>
         <Button onClick={handleExport}>
           <Download />
@@ -355,7 +355,7 @@ export function CollageCanvas() {
         </Button>
       </ActionFAB>
       <div className="flex h-screen flex-row-reverse w-full gap-4">
-        <div className="flex-1 p-14 flex items-start  space-y-4">
+        <div className="flex-1 flex items-center justify-center space-y-4">
           <canvas
             ref={canvasRef}
             width={CANVAS_SIZE}
@@ -369,7 +369,7 @@ export function CollageCanvas() {
             onWheel={handleWheel}
           />
         </div>
-        <div className="flex-1 p-14 border-r space-y-10">
+        <div className="flex-1 p-14 flex justify-center flex-col border-r space-y-10">
           <div className="space-y-2">
             <Label>Layout</Label>
             <div className="flex flex-wrap gap-4">
@@ -432,7 +432,7 @@ export function CollageCanvas() {
               ))}
             </div>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-8">
             <Label>Customize</Label>
             <div className="space-y-1">
               <p className="font-medium text-neutral-500 text-sm">Gap</p>
@@ -478,6 +478,6 @@ export function CollageCanvas() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

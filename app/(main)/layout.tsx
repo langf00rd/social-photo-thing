@@ -1,5 +1,3 @@
-import Nav from "@/components/nav";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -11,7 +9,6 @@ export default function RootLayout({
       <p className="md:hidden text-center mt-10 text-destructive">
         Please open the app on a bigger screen
       </p>
-      <Nav />
     </div>
   );
 }

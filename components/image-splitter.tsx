@@ -106,7 +106,7 @@ export function ImageSplitter() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `instagram-split-${side}-${Date.now()}.png`;
+        a.download = `SPLIT-${side.toUpperCase()}-${Date.now()}.png`;
         a.click();
         URL.revokeObjectURL(url);
       },

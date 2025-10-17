@@ -18,3 +18,15 @@ export interface ColorSwatch {
   rgb: { r: number; g: number; b: number };
   percentage: number;
 }
+
+
+export interface CaptionTextElement {
+  id: string
+  text: string
+  x: number
+  y: number
+  fontSize: number
+  fontUrl: string
+  fontFamily: string
+  color: string
+}

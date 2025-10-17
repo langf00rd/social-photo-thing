@@ -2,6 +2,7 @@
 
 import { PAGES } from "@/lib/contants";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -35,7 +36,22 @@ export default function Nav() {
               className={`uppercase text-nowrap tracking-tight text-sm last:border-none md:border-r text-center px-4 flex-1 w-full ${pathname === page.route ? "text-black font-medium" : "text-neutral-400"}`}
               key={page.route}
             >
-              <p>{page.label}</p>
+              <motion.p
+                initial={{
+                  y: 40,
+                  opacity: 0,
+                }}
+                animate={{
+                  y: 0,
+                  opacity: 1,
+                }}
+                transition={{
+                  delay: index * 0.15,
+                  type: "tween",
+                }}
+              >
+                {page.label}
+              </motion.p>
             </Link>
           ))}
         </div>

@@ -31,6 +31,44 @@ export function Caption() {
     height: 0,
   });
 
+  /* ---- Helper to get text bounding box ---- */
+  const getTextBoundingBox = (
+    ctx: CanvasRenderingContext2D,
+    element: CaptionTextElement,
+    canvasWidth: number,
+  ) => {
+    ctx.font = `${element.fontSize}px "${element.fontFamily}"`;
+    const maxWidth = canvasWidth - 40;
+    const words = element.text.split(" ");
+    let line = "";
+    const lines: string[] = [];
+
+    for (const word of words) {
+      const testLine = line + (line ? " " : "") + word;
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && line) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = testLine;
+      }
+    }
+    if (line) lines.push(line);
+
+    const lineHeights = lines.length * (element.fontSize + 10);
+    const maxLineWidth = Math.max(
+      ...lines.map((l) => ctx.measureText(l).width),
+    );
+
+    return {
+      x: element.x - 5,
+      y: element.y - 5,
+      width: maxLineWidth + 10,
+      height: lineHeights + 5,
+      lines,
+    };
+  };
+
   /* ---- load font ---- */
   const loadGoogleFont = async (url: string) => {
     if (loadedFonts.current.has(url)) return;
@@ -128,6 +166,18 @@ export function Caption() {
     reader.readAsDataURL(file);
   };
 
+  const handleFontUrlChange = (url: string) => {
+    setFontUrl(url);
+    // Extract first font family from Google Fonts URL
+    if (url.includes("family=")) {
+      const familyMatch = url.match(/family=([^&:]+)/);
+      if (familyMatch) {
+        const fontName = decodeURIComponent(familyMatch[1]).replace(/\+/g, " ");
+        setFontFamily(fontName);
+      }
+    }
+  };
+
   const drawTextElements = (
     ctx: CanvasRenderingContext2D,
     elements: CaptionTextElement[],
@@ -163,19 +213,10 @@ export function Caption() {
       );
 
       if (element.id === selectedId) {
-        const lineHeights = lines.length * (element.fontSize + 10);
-        const maxLineWidth = Math.max(
-          ...lines.map((l) => ctx.measureText(l).width),
-        );
-
+        const bbox = getTextBoundingBox(ctx, element, canvasWidth);
         ctx.strokeStyle = "#00d4ff";
         ctx.lineWidth = 2;
-        ctx.strokeRect(
-          element.x - 5,
-          element.y - 5,
-          maxLineWidth + 10,
-          lineHeights + 5,
-        );
+        ctx.strokeRect(bbox.x, bbox.y, bbox.width, bbox.height);
       }
     });
   };
@@ -217,19 +258,20 @@ export function Caption() {
     const canvasX = x * scaleX;
     const canvasY = y * scaleY;
 
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
     let clicked = false;
-    for (const element of textElements) {
-      const ctx = canvas.getContext("2d");
-      if (!ctx) continue;
-      ctx.font = `${element.fontSize}px "${element.fontFamily}"`;
-      const textWidth = ctx.measureText(element.text).width;
-      const textHeight = element.fontSize + 10;
+    // Check in reverse order (last drawn = top of z-order)
+    for (let i = textElements.length - 1; i >= 0; i--) {
+      const element = textElements[i];
+      const bbox = getTextBoundingBox(ctx, element, canvas.width);
 
       if (
-        canvasX >= element.x - 5 &&
-        canvasX <= element.x + textWidth + 5 &&
-        canvasY >= element.y - 5 &&
-        canvasY <= element.y + textHeight + 5
+        canvasX >= bbox.x &&
+        canvasX <= bbox.x + bbox.width &&
+        canvasY >= bbox.y &&
+        canvasY <= bbox.y + bbox.height
       ) {
         selectTextElement(element.id);
         setDraggingId(element.id);
@@ -410,7 +452,7 @@ export function Caption() {
                     <Input
                       id="font-url"
                       value={fontUrl}
-                      onChange={(e) => setFontUrl(e.target.value)}
+                      onChange={(e) => handleFontUrlChange(e.target.value)}
                       placeholder="https://fonts.googleapis.com/css2?family=..."
                       className="text-sm"
                     />
@@ -492,7 +534,7 @@ export function Caption() {
             style={{
               width: "100%",
               height: "auto",
-              maxHeight: "100vh",
+              maxHeight: "80vh",
               objectFit: "contain",
             }}
           />

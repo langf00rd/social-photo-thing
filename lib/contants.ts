@@ -1,5 +1,5 @@
 import Home from "@/app/page";
-import { Grid, Paintbrush, Scissors } from "lucide-react";
+import { Grid, Paintbrush, Pen, Scissors } from "lucide-react";
 import { LayoutPreset } from "./types";
 
 export const PAGES = [
@@ -29,9 +29,9 @@ export const PAGES = [
   },
   {
     label: "Caption",
-    description: "Create collage",
+    description: "Write Photo Caption",
     route: "/caption",
-    icon: Grid,
+    icon: Pen,
   },
 ];
 

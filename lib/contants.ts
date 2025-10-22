@@ -1,5 +1,4 @@
-import Home from "@/app/page";
-import { Grid, Paintbrush, Pen, Scissors } from "lucide-react";
+import { Grid, Grid2X2, Home, Paintbrush, Pen, Scissors } from "lucide-react";
 import { LayoutPreset } from "./types";
 
 export const PAGES = [
@@ -8,6 +7,12 @@ export const PAGES = [
     description: "Home",
     route: "/",
     icon: Home,
+  },
+  {
+    label: "Moodboard",
+    route: "/moodboard",
+    icon: Grid2X2,
+    description: "Create a moodboard",
   },
   {
     label: "Photo Splitter",
@@ -166,3 +171,7 @@ export const PRESETS: LayoutPreset[] = [
     ],
   },
 ];
+
+export enum STORAGE_KEYS {
+  moodboard = "moodboard",
+}

@@ -19,14 +19,20 @@ export interface ColorSwatch {
   percentage: number;
 }
 
-
 export interface CaptionTextElement {
-  id: string
-  text: string
-  x: number
-  y: number
-  fontSize: number
-  fontUrl: string
-  fontFamily: string
-  color: string
+  id: string;
+  text: string;
+  x: number;
+  y: number;
+  fontSize: number;
+  fontUrl: string;
+  fontFamily: string;
+  color: string;
+}
+
+export interface Moodboard {
+  id: string;
+  name: string;
+  images: string[];
+  created_at: string;
 }
